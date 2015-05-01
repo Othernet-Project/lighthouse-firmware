@@ -7,3 +7,6 @@
 [submodule "apps/ondd"]
 	path = apps/ondd
 	url = https://github.com/WestPond/ondd.git
+[submodule "linux"]
+	path = linux
+	url = https://github.com/WestPond/linux.git

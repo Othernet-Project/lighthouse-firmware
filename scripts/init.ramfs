@@ -1,0 +1,9 @@
+dir /dev 755 0 0
+nod /dev/console 644 0 0 c 5 1
+dir /lib 755 0 0
+file /lib/ld-2.19.so buildroot/output/target/lib/ld-2.19.so 755 0 0
+slink /lib/ld-linux.so.3 ld-2.19.so 777 0 0
+file /lib/libc-2.19.so buildroot/output/target/lib/libc-2.19.so 755 0 0
+slink /lib/libc.so.6 libc-2.19.so 777 0 0
+file /busybox buildroot/output/target/bin/busybox 755 0 0
+file /init scripts/init 755 0 0

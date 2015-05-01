@@ -1,0 +1,40 @@
+#!/busybox sh
+
+# Mount devtmpfs for nodes
+/busybox mount -t devtmpfs devtmpfs /dev
+
+# Setup console
+exec 0</dev/console
+exec 1>/dev/console
+exec 2>/dev/console
+
+echo "initramfs booting..."
+
+/busybox mkdir -p /rootfs /tmpfs /root
+
+# Mount rootfs
+if ! /busybox mount -t ubifs -o ro ubi0:rootfs /rootfs ; then
+  echo "Mounting seconary rootfs"
+  if ! /busybox mount -t ubifs -o ro ubi0:_rootfs /rootfs ; then
+    echo "Failed to mount root filesystem"
+    exit -1
+  fi
+fi
+
+# Create a tmpfs to hold transient data
+/busybox mount -t tmpfs tmpfs -o size=64m /tmpfs
+
+# Create a unionfs mount
+/busybox mount -t unionfs -o dirs=/tmpfs=rw:/rootfs=ro unionfs /root
+
+# Move mount points to new root
+/busybox mkdir /root/mnt/tmpfs /root/mnt/rootfs
+/busybox mount --move /dev /root/dev
+/busybox mount --move /tmpfs /root/mnt/tmpfs
+/busybox mount --move /rootfs /root/mnt/rootfs
+
+# Switch to new root
+exec /busybox switch_root /root /sbin/init
+
+# If the switch root failed, drop to a shell
+exec /busybox sh

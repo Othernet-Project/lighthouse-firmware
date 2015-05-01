@@ -1,0 +1,13 @@
+diff --git a/librarian/plugins/__init__.py b/librarian/plugins/__init__.py
+index 5bb3bb5..eff91d2 100644
+--- a/librarian/plugins/__init__.py
++++ b/librarian/plugins/__init__.py
+@@ -23,7 +23,7 @@ DASHBOARD = []
+ 
+ 
+ def is_pkg(path):
+-    init = os.path.join(path, '__init__.py')
++    init = os.path.join(path, '__init__.pyc')
+     return os.path.isdir(path) and os.path.isfile(init)
+ 
+ 

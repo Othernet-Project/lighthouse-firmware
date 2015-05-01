@@ -1,0 +1,15 @@
+TOP_DIR := $(shell readlink -f $(TOP_DIR)/..)
+-include $(TOP_DIR)/Makefile.config
+
+O ?= $(TOP_DIR)/buildroot/output
+STAGING_DIR := $(O)/staging
+TARGET_DIR := $(O)/target
+IMAGES_DIR := $(O)/images
+HOST_DIR := $(O)/host
+
+SYSROOT := --sysroot=$(O)/staging
+
+CFLAGS += $(SYSROOT) -I$(TOP_DIR)/vendor/include
+LDFLAGS += $(SYSROOT)
+
+INSTALL_PREFIX := $(TARGET_DIR)

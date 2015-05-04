@@ -1,5 +1,6 @@
-include Makefile.config
+include buildroot/.config
 
+CROSS_COMPILE := $(strip $(subst ",,$(BR2_TOOLCHAIN_EXTERNAL_PATH)/bin/$(BR2_TOOLCHAIN_EXTERNAL_PREFIX)-))
 IMAGES_DIR := buildroot/output/images
 
 VERSION := $(shell cat version 2> /dev/null)
@@ -8,7 +9,7 @@ PACKAGE := outernet-rx-$(VERSION).pkg
 KERNEL = $(IMAGES_DIR)/kernel.img
 ROOTFS = $(IMAGES_DIR)/rootfs.ubifs
 
-.PHONY: build mfg clean
+.PHONY: build mfg clean buildroot-menuconfig linux-menuconfig
 
 default: $(PACKAGE)
 
@@ -31,12 +32,15 @@ $(ROOTFS): .stamp_buildroot .stamp_apps .stamp_tools
 buildroot/.config:
 	@make -C buildroot/ outernetrx_defconfig
 
-.stamp_apps: .stamp_buildroot Makefile.config
+buildroot-menuconfig: buildroot/.config
+	@make -C buildroot menuconfig
+
+.stamp_apps: .stamp_buildroot
 	@make -C apps/ release
 	@make -C apps/ install
 	@touch .stamp_apps
 
-.stamp_tools: .stamp_buildroot Makefile.config
+.stamp_tools: .stamp_buildroot
 	@make -C tools/ release
 	@make -C tools/ install
 	@touch .stamp_tools
@@ -49,7 +53,7 @@ $(KERNEL): $(KERNEL_UIMAGE) $(KERNEL_DTB) $(KERNEL_INITRAMFS)
 	mkdir -p $(IMAGES_DIR)
 	./linux/mkbootimg --kernel $(KERNEL_UIMAGE) --ramdisk $(KERNEL_INITRAMFS) --second $(KERNEL_DTB) --output $(KERNEL)
 
-$(KERNEL_INITRAMFS): scripts/init scripts/init.ramfs
+$(KERNEL_INITRAMFS): .stamp_buildroot scripts/init scripts/init.ramfs
 	mkdir -p $(IMAGES_DIR)
 	./linux/usr/gen_init_cpio scripts/init.ramfs | gzip > $@
 
@@ -63,6 +67,9 @@ $(KERNEL_UIMAGE): linux/.config
 linux/.config:
 	ARCH=arm make -C linux/ outernetrx_defconfig
 
+linux-menuconfig: linux/.config
+	ARCH=arm make -C linux/ menuconfig
+
 mfg: $(KERNEL_UIMAGE) $(KERNEL_DTB)
 	make -C buildroot/ distclean
 	make -C buildroot/ outernetrx_mfg_defconfig
@@ -71,8 +78,8 @@ mfg: $(KERNEL_UIMAGE) $(KERNEL_DTB)
 	  --second $(KERNEL_DTB) --output kernel_mfg.img
 
 clean:
-	make -C buildroot/ distclean
-	make -C linux/ distclean
+	make -C buildroot/ clean
+	make -C linux/ clean
 	make -C apps/ clean
 	make -C tools/ clean
-	rm .stamp_*
+	-rm .stamp_*

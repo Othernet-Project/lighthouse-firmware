@@ -10,3 +10,6 @@
 [submodule "linux"]
 	path = linux
 	url = https://github.com/WestPond/linux.git
+[submodule "apps/wptdm"]
+	path = apps/wptdm
+	url = https://github.com/WestPond/wptdm.git

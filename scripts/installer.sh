@@ -19,7 +19,7 @@ if echo $CONTENTS | grep version > /dev/null ; then
     echo "Package already installed"
     exit 1
   fi
-  CHK=$(echo -e "$PKG_VER\n$OS_VER\n" | sort -r | head -1)
+  CHK=$(echo -e "$PKG_VER\n$OS_VER\n" | sort -rV | head -1)
   if [ "$PKG_VER" != "$CHK" ]; then
     echo "Package version is older than installed version"
     exit 1

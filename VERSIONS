@@ -1,0 +1,27 @@
+The pillar versioning scheme
+============================
+
+The versioninig scheme described below is applied starting with 0.6 release.
+
+The Pillar version consists of 3 components: major, minor, and build. Major and 
+minor releases have the conventional semantic: major release is a regular
+release, and minor release contains hotfixes. 
+
+Major release can use any number between 1 and infnity. Special major number of
+0 is used to denote beta and alpha builds.
+
+For each major release, minor release is 0. Hotfix increments the minor digit
+by 1. There can be up to 9 hotfixes. 
+
+Build versions are zero-padded integers starting with 0 for every major
+release. These are used for internal purposes, and should not be released. Each
+build version > 0 should be treated as a development version for the next major
+release.
+
+Examples:
+
+    0.7.000 - 7th beta version.
+    1.0.000 - first major release
+    1.1.000 - first hotfix rlease for first major release
+    2.8.000 - 8th hotfix for second major release
+    3.0.002 - second development build for 4th major release.

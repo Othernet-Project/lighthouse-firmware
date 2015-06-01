@@ -1,0 +1,119 @@
+diff --git a/librarian/librarian.ini b/librarian/librarian.ini
+index 731f5c0..c067205 100644
+--- a/librarian/librarian.ini
++++ b/librarian/librarian.ini
+@@ -7,10 +7,10 @@
+ server = gevent
+ 
+ # Port on which to listen
+-port = 80
++port = 8000
+ 
+ # Address to bind to
+-bind = 0.0.0.0
++bind = 127.0.0.1
+ 
+ # IP address range assigned by DHCP to clients
+ ap_client_ip_range =
+@@ -21,7 +21,7 @@ ap_client_ip_range =
+ root_url = http://librarian.outernet
+ 
+ # Whether to enable debug mode and reloader
+-debug = yes
++debug = no
+ 
+ # Whether extra logging will be output to STDOUT (slows the server down)
+ log = no
+@@ -38,10 +38,10 @@ backend = embedded.archive.EmbeddedArchive
+ [platform]
+ 
+ # Platform name, such as pillar, web, etc.
+-name =
++name = Pillar
+ 
+ # Location of the file containing the platform version number
+-version_file =
++version_file = /etc/version
+ 
+ [logging]
+ # This section deals with logging section. Most of the settings are related to
+@@ -69,7 +69,7 @@ syslog = /var/log/syslog
+ 
+ [setup]
+ # Store setup data in this file
+-file = /var/lib/outernet/librarian.json
++file = /mnt/data/librarian/librarian.json
+ 
+ [database]
+ # Names of all databases
+@@ -77,27 +77,26 @@ names =
+     main
+     sessions
+ 
+-# Path to database directory
+-path = /var/lib/outernet
++path = /mnt/data/librarian
+ 
+ [content]
+ # Path for temporary content storage
+-spooldir = /var/spool/downloads/content
++spooldir = /mnt/data/downloads/content
+ 
+ # Path for file downloads
+-filedir = /var/spool/downloads/files
++filedir = /mnt/data/downloads/files
+ 
+ # Path for the apps directory
+-appdir = /var/spool/downloads/files/apps
++appdir = /mnt/data/downloads/files/apps
+ 
+ # Path to a directory where zipballs that are being extracted are symlinked
+-unpackdir = /srv/zipballs/.unpack
++unpackdir = /mnt/data/librarian/zipballs/.unpack
+ 
+ # Path to content directory (where archive zipballs are stored)
+-contentdir = /srv/zipballs
++contentdir = /mnt/data/librarian/zipballs
+ 
+ # Path to cover images
+-covers = /srv/zipballs/.covers
++covers = /mnt/data/librarian/zipballs/.covers
+ 
+ # Extension of the signed content
+ extension = sig
+@@ -135,11 +134,11 @@ expires = 600
+ 
+ [cache]
+ # Unique backend identifier, possible values are: "in-memory", "memcached"
+-backend =
++backend = in-memory
+ 
+ # Default timeout value for all cached content for which there is no explicit
+ # timeout value specified
+-timeout =
++timeout = 0
+ 
+ # List of memcached server addresses, e.g.:
+ # servers =
+@@ -169,10 +168,10 @@ license = yes
+ logs = yes
+ 
+ # Show link to TVHeadend
+-tvheadend = yes
++tvheadend = no
+ 
+ # Control tuner using ONDD (disable TVHeadend when enabling this)
+-ondd = no
++ondd = yes
+ 
+ # Backup and rebuild content database
+ dbmanage = yes
+@@ -195,7 +194,7 @@ backups = database_backups
+ # Order in which plugins should be rendered
+ plugins =
+     diskspace
+-    tvheadend
++    ondd
+     dbmanage
+     netinterfaces
+     logs

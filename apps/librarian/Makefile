@@ -24,7 +24,6 @@ $(PKG_TGZ):
 
 install: $(STAMP_BUILT)
 	( cd librarian && patch -p1 < ../pillar-config.patch )
-	( cd librarian && patch -p1 < ../pillar-version.patch )
 	( cd librarian && PATH="$(HOST_DIR)/bin:$(HOST_DIR)/sbin:$(HOST_DIR)/usr/bin:$(HOST_DIR)/usr/sbin:$(PATH)" \
 	PYTHONPATH="$(TARGET_DIR)/usr/lib/python2.7/sysconfigdata/:$(TARGET_DIR)/usr/lib/python2.7/site-packages/" \
 	_python_sysroot=$(HOST_DIR)/usr/arm-buildroot-linux-gnueabi/sysroot \

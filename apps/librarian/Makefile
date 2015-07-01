@@ -1,9 +1,9 @@
 TOP_DIR := $(shell pwd)
 -include $(TOP_DIR)/../Makefile.in
 
-PKG_VERSION = 0.2
-PKG_URL = https://github.com/Outernet-Project/librarian/releases/download/v$(PKG_VERSION)/librarian-$(PKG_VERSION).tar.gz
+PKG_VERSION = 27968dcab2d44059263c12c475703ecca46fc177
 PKG_TGZ = librarian-$(PKG_VERSION).tar.gz
+PKG_URL = https://github.com/Outernet-Project/librarian/archive/$(PKG_VERSION).tar.gz
 
 STAMP_UNPACKED = librarian/.stamp_unpacked
 STAMP_PATCHED = librarian/.stamp_patched
@@ -23,7 +23,6 @@ $(PKG_TGZ):
 	wget $(PKG_URL) -O librarian-$(PKG_VERSION).tar.gz
 
 install: $(STAMP_BUILT)
-	( cd librarian && patch -p1 < ../pillar-config.patch )
 	( cd librarian && PATH="$(HOST_DIR)/bin:$(HOST_DIR)/sbin:$(HOST_DIR)/usr/bin:$(HOST_DIR)/usr/sbin:$(PATH)" \
 	PYTHONPATH="$(TARGET_DIR)/usr/lib/python2.7/sysconfigdata/:$(TARGET_DIR)/usr/lib/python2.7/site-packages/" \
 	_python_sysroot=$(HOST_DIR)/usr/arm-buildroot-linux-gnueabi/sysroot \
@@ -32,6 +31,7 @@ install: $(STAMP_BUILT)
 	$(HOST_DIR)/usr/bin/python setup.py install \
 	--prefix=$(TARGET_DIR)/usr --executable=/usr/bin/python --single-version-externally-managed --root=/ )
 	install -m 0755 S90librarian $(INSTALL_PREFIX)/etc/init.d/
+	install -m 0755 librarian.ini $(INSTALL_PREFIX)/etc/
 
 clean:
 	-[ -d librarian ] && rm -rf librarian/

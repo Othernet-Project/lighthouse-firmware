@@ -5,6 +5,7 @@ IMAGES_DIR := buildroot/output/images
 
 VERSION := $(shell cat version 2> /dev/null)
 PACKAGE := outernet-rx-$(VERSION).pkg
+RESET_TOKEN := $(shell cat reset_token 2> /dev/null)
 
 KERNEL = $(IMAGES_DIR)/kernel.img
 ROOTFS = $(IMAGES_DIR)/rootfs.ubifs
@@ -27,6 +28,7 @@ $(ROOTFS): .stamp_buildroot .stamp_apps .stamp_tools
 	@make -C buildroot/ target-finalize
 	@echo "wt200" > buildroot/output/target/etc/platform
 	@echo $(VERSION) > buildroot/output/target/etc/version
+	@echo $(RESET_TOKEN) > buildroot/output/target/etc/emergency.token
 	@touch .stamp_buildroot
 
 buildroot/.config:

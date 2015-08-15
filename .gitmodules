@@ -1,15 +1,9 @@
-[submodule "buildroot"]
-	path = buildroot
-	url = https://github.com/WestPond/buildroot.git
 [submodule "tools/pkg"]
 	path = tools/pkg
-	url = https://github.com/WestPond/tools-pkg.git
-[submodule "apps/ondd"]
-	path = apps/ondd
-	url = https://github.com/WestPond/ondd.git
+	url = https://github.com/Outernet-Project/tools-pkg.git
+[submodule "buildroot"]
+	path = buildroot
+	url = https://github.com/Outernet-Project/lighthouse-buildroot.git
 [submodule "linux"]
 	path = linux
-	url = https://github.com/WestPond/linux.git
-[submodule "apps/wptdm"]
-	path = apps/wptdm
-	url = https://github.com/WestPond/wptdm.git
+	url = https://github.com/Outernet-Project/lighthouse-linux.git

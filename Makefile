@@ -41,6 +41,9 @@ buildroot/.config:
 buildroot-menuconfig: buildroot/.config
 	@make -C buildroot menuconfig
 
+buildroot-savedefconfig: buildroot/.config
+	@cp buildroot/.config buildroot/configs/outernetrx_defconfig
+
 .stamp_apps: .stamp_buildroot
 	@make -C apps/ release
 	@make -C apps/ install

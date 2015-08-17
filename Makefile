@@ -16,7 +16,7 @@ default: $(PACKAGE)
 
 build: .stamp_buildroot
 
-$(PACKAGE): package.pem version $(KERNEL) $(ROOTFS) scripts/installer.sh
+$(PACKAGE): version $(KERNEL) $(ROOTFS) scripts/installer.sh
 	read -r -p "Package key password: " PASSWORD && \
 	./buildroot/output/host/usr/bin/mkpkg -k package.pem -p "$$PASSWORD" -o $@ \
 		version scripts/installer.sh:run.sh $(KERNEL) $(ROOTFS)

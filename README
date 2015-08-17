@@ -18,7 +18,7 @@ example):
 
 On 64-bit systems, you may additionally need the following package:
 
-- libstdc+6-:i386
+- lib32stdc++6
 
 Clone the lighthouse-firmware repository. This repo is primarily build scripts
 and uses submodules to pull in the primary components.

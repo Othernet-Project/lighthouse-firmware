@@ -14,17 +14,15 @@ ROOTFS = $(IMAGES_DIR)/rootfs.ubifs
 
 default: $(PACKAGE)
 
-signed: $(PACKAGE).signed
-
 build: .stamp_buildroot
 
 $(PACKAGE): version $(KERNEL) $(ROOTFS) scripts/installer.sh
-	./buildroot/output/host/usr/bin/mkpkg -p "$$PASSWORD" -o $@ \
+	./buildroot/output/host/usr/bin/mkpkg -o $@ \
 		version scripts/installer.sh:run.sh $(KERNEL) $(ROOTFS)
 
 $(PACKAGE).signed: version package.pem $(KERNEL) $(ROOTFS) scripts/installer.sh
 	read -r -p "Package key password: " PASSWORD && \
-	./buildroot/output/host/usr/bin/mkpkg -p "$$PASSWORD" -o $@ \
+	./buildroot/output/host/usr/bin/mkpkg -k package.pem -p "$$PASSWORD" -o $@ \
 		version scripts/installer.sh:run.sh $(KERNEL) $(ROOTFS)
 
 $(ROOTFS): .stamp_buildroot .stamp_apps .stamp_tools

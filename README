@@ -1,5 +1,23 @@
-Building the Outernet Lighthouse firware image
-==============================================
+Building the Outernet Lighthouse firmware image automatically
+=============================================================
+
+This should work on any Linux and probably OSX.  First get the `debian-qemu-tp.sh` script from this repository or download it directly:
+
+    wget https://raw.githubusercontent.com/Outernet-Project/lighthouse-firmwae/pillar/debian-qemu-tp.sh
+
+* Make sure that qemu, ssh and nmap are installed.  This can be checked with `./debian-qemu-tp.sh check_requirements`
+* The build will require around 10GB of disk and 5GB of ram.
+* It assumes KVM is enabled for faster virtualization.
+* Kick off the build with `./debian-qemu-tp.sh all`
+* This will set up a Debian VM.
+* You will have to enter the stock passwords once, they will be given at that time.
+* For more details about tweaking the qemu script, `./debian-qemu-tp.sh --help`
+
+This script is young and mostly tailored for a single purpose.  Open an issue to add support for your workflow or environment.
+
+
+Building the Outernet Lighthouse firmware image manually
+=======================================================
 
 The following packages may need to be installed (Ubuntu system used as
 example):
@@ -36,7 +54,7 @@ additional packages may be needed.
 #> cp <outernet-rx>/crosstool-ng.config .config
 #> ./ct-ng build
 
-The resulting cross-compiler will be in ~/x-tools/. Recomendation is to put it
+The resulting cross-compiler will be in ~/x-tools/. Recommendation is to put it
 into /opt:
 
 #> sudo mkdir /opt/toolchains/
@@ -53,7 +71,7 @@ Build the FW:
 
 #> make
 
-There are some convienience targets in the make file:
+There are some convenience targets in the make file:
 
 buildroot-menuconfig - will setup the buildroot defconfig and run menconfig
 linux-menuconfig - will setup the kernels config and run menuconfig

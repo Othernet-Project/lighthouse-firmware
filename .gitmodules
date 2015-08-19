@@ -3,7 +3,7 @@
 	url = https://github.com/Outernet-Project/tools-pkg.git
 [submodule "buildroot"]
 	path = buildroot
-	url = https://github.com/Outernet-Project/lighthouse-buildroot.git
+	url = https://github.com/Outernet-Project/outernetrx-buildroot.git
 [submodule "linux"]
 	path = linux
-	url = https://github.com/Outernet-Project/lighthouse-linux.git
+	url = https://github.com/Outernet-Project/outernetrx-linux.git

@@ -14,6 +14,8 @@ ROOTFS = $(IMAGES_DIR)/rootfs.ubifs
 
 default: $(PACKAGE)
 
+signed: $(PACKAGE).signed
+
 build: .stamp_buildroot
 
 $(PACKAGE): version $(KERNEL) $(ROOTFS) scripts/installer.sh

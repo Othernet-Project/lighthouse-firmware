@@ -3,7 +3,7 @@ Building the Outernet Lighthouse firmware image automatically
 
 This should work on any Linux and probably OSX.  First get the `debian-qemu-tp.sh` script from this repository or download it directly:
 
-    wget https://raw.githubusercontent.com/Outernet-Project/lighthouse-firmwae/pillar/debian-qemu-tp.sh
+    wget https://raw.githubusercontent.com/Outernet-Project/lighthouse-firmware/pillar/debian-qemu-tp.sh
 
 * Make sure that qemu, ssh and nmap are installed.  This can be checked with `./debian-qemu-tp.sh check_requirements`
 * The build will require around 10GB of disk and 5GB of ram.

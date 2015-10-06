@@ -1,7 +1,7 @@
 TOP_DIR := $(shell pwd)
 -include $(TOP_DIR)/../Makefile.in
 
-PKG_VERSION = v0.4.post5
+PKG_VERSION = dc1bd88f3ac5e92b7b4aef3df6b591ca1f116140
 PKG_TGZ = librarian-$(PKG_VERSION).tar.gz
 PKG_URL = https://github.com/Outernet-Project/librarian/archive/$(PKG_VERSION).tar.gz
 
@@ -23,6 +23,7 @@ $(PKG_TGZ):
 	wget $(PKG_URL) -O librarian-$(PKG_VERSION).tar.gz
 
 install: $(STAMP_BUILT)
+	( cd librarian && patch -p1 < ../ondd.patch )
 	( cd librarian && PATH="$(HOST_DIR)/bin:$(HOST_DIR)/sbin:$(HOST_DIR)/usr/bin:$(HOST_DIR)/usr/sbin:$(PATH)" \
 	PYTHONPATH="$(TARGET_DIR)/usr/lib/python2.7/sysconfigdata/:$(TARGET_DIR)/usr/lib/python2.7/site-packages/" \
 	_python_sysroot=$(HOST_DIR)/usr/arm-buildroot-linux-gnueabi/sysroot \

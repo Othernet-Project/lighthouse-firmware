@@ -33,6 +33,9 @@ example):
 - libncurses5-dev
 - unzip
 - libssl-dev
+- mercurial
+- cpio
+- bc
 
 On 64-bit systems, you may additionally need the following package:
 

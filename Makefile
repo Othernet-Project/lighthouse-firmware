@@ -10,7 +10,7 @@ RESET_TOKEN := $(shell cat reset_token 2> /dev/null)
 KERNEL = $(IMAGES_DIR)/kernel.img
 ROOTFS = $(IMAGES_DIR)/rootfs.ubifs
 
-.PHONY: build mfg clean buildroot-menuconfig linux-menuconfig
+.PHONY: build mfg clean buildroot-menuconfig linux-menuconfig mrproper
 
 default: $(PACKAGE)
 
@@ -94,3 +94,8 @@ clean:
 	make -C apps/ clean
 	make -C tools/ clean
 	-rm .stamp_*
+
+mrproper: clean
+	-rm buildroot/.config
+	-rm linux/.config
+

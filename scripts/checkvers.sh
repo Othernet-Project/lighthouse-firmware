@@ -5,9 +5,15 @@ PKGDIR=$SCRIPTDIR/../my_packages
 SRCDIR=$1
 
 
+mkfilepath() {
+    pkgname=$1
+    echo "$PKGDIR/$pkgname/${pkgname}.mk"
+}
+
+
 pkgver() {
     pkgname=$1
-    echo $(grep VERSION "$PKGDIR/${pkgname}/${pkgname}.mk" | head -n1 \
+    echo $(grep VERSION "$(mkfilepath $pkgname)" | head -n1 \
         | cut -f2 -d=)
 }
 
@@ -23,9 +29,13 @@ findspkg() {
 
 patchver() {
     pkgname=$1
-    version=$2
-    makefile=$PKGDIR/$pkgname/${pkgname}.mk
-    sed "s/VERSION = \(.\+\)/VERSION = $version/" -i "$makefile"
+    newver=$2
+    sed "s/VERSION = \(.\+\)/VERSION = $newver/" -i "$(mkfilepath $pkgname)"
+}
+
+isghpkg() {
+    pkgname=$1
+    grep "github.com" "$(mkfilepath $pkgname)" 2>&1 > /dev/null
 }
 
 if [ -z "$SRCDIR" ]
@@ -42,9 +52,16 @@ fi
 for pkg in $PKGDIR/*
 do
     pkgname=$(basename $pkg)
-    version=$(pkgver $pkgname)
+    if ! isghpkg $pkgname
+    then
+        continue
+    fi
+
     echo -n "Checking $pkgname..."
+
+    version=$(pkgver $pkgname)
     srcpkg=$(findspkg $pkgname)
+
     if [ -z "$srcpkg" ]
     then
         echo "NOT FOUND"

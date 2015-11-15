@@ -1,7 +1,7 @@
 TOP_DIR := $(shell pwd)
 -include $(TOP_DIR)/../Makefile.in
 
-PKG_VERSION = v0.4.post8
+PKG_VERSION = 0fc848eab72d541084ab23953379e6ff14d866d0
 PKG_TGZ = librarian-$(PKG_VERSION).tar.gz
 PKG_URL = https://github.com/Outernet-Project/librarian/archive/$(PKG_VERSION).tar.gz
 

@@ -22,7 +22,7 @@ if ! /busybox mount -t ubifs -o ro ubi0:rootfs /rootfs ; then
 fi
 
 # Create a tmpfs to hold transient data
-/busybox mount -t tmpfs tmpfs -o size=64m /tmpfs
+/busybox mount -t tmpfs tmpfs -o size=80m /tmpfs
 
 # Create a unionfs mount
 /busybox mount -t unionfs -o dirs=/tmpfs=rw:/rootfs=ro unionfs /root

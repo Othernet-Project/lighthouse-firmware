@@ -1,2 +1,6 @@
 .stamp_*
 reset_token
+package.pem
+*.pkg
+*.pkg.signed
+*.md5

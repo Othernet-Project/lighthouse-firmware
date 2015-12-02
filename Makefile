@@ -4,19 +4,27 @@ CROSS_COMPILE := $(strip $(subst ",,$(BR2_TOOLCHAIN_EXTERNAL_PATH)/bin/$(BR2_TOO
 IMAGES_DIR := buildroot/output/images
 
 VERSION := $(shell cat version 2> /dev/null)
-PACKAGE := outernet-rx-$(VERSION).pkg
+NAME_BASE = outernet-rx-$(VERSION)
+PACKAGE := $(NAME_BASE).pkg
+MD5 := $(NAME_BASE).md5
 RESET_TOKEN := $(shell cat reset_token 2> /dev/null)
 
 KERNEL = $(IMAGES_DIR)/kernel.img
 ROOTFS = $(IMAGES_DIR)/rootfs.ubifs
 
-.PHONY: build mfg clean buildroot-menuconfig linux-menuconfig mrproper
+.PHONY: build signed md5 mfg clean buildroot-menuconfig linux-menuconfig mrproper
 
 default: $(PACKAGE)
+
+md5: $(PACKAGE).signed $(MD5)
 
 signed: $(PACKAGE).signed
 
 build: .stamp_buildroot
+
+$(MD5): $(PACKAGE).signed
+	mv $< $(PACKAGE)
+	md5sum $(PACKAGE) > $@
 
 $(PACKAGE): version $(KERNEL) $(ROOTFS) scripts/installer.sh
 	./buildroot/output/host/usr/bin/mkpkg -o $@ \
